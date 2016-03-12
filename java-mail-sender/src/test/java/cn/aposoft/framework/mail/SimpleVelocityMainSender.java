@@ -14,7 +14,7 @@ public class SimpleVelocityMainSender {
 		//
 		// mailEngine.doSendHtmlEmail(entity.getTitle(), mailContent, "于津水",
 		// "pleasantboy@qq.com");
-		mailEngine.doSendHtmlEmail(entity.getTitle(), mailContent, "于津水", "602570224@qq.com");
+		mailEngine.doSendHtmlEmail(entity.getTitle(), mailContent, "于津水", "sc_yujinshui@126.com");
 	}
 
 	private static SimpleMailEntity getSimpleMailEntity() {
