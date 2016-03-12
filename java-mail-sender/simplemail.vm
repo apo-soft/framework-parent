@@ -1,0 +1,12 @@
+<html>
+<head>
+<title>$bean.title</title>
+</head>
+<body>
+<div style="color:blue;">$bean.receiver :</div>
+<div>$bean.content</div>
+<div>$bean.sender</div>
+<div>$bean.date</div>
+<div><img src="http://velocity.apache.org/images/velocity_project_wide.png" /></div>
+</body>
+</html>
