@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
 
 /**
  * @author LiuJian
@@ -23,43 +22,10 @@ public class MailClient {
 	 * 寻找"mail.smtp.auth" 身份验证，目前免费邮件服务器都需要这一项
 	 */
 	private Session session;
-	private String mailHost;
-	private String senderUsername;
-	private String senderPassword;
-
-	public String getMailHost() {
-		return mailHost;
-	}
-
-	public void setMailHost(String mailHost) {
-		this.mailHost = mailHost;
-	}
-
-	public String getSenderUsername() {
-		return senderUsername;
-	}
-
-	public void setSenderUsername(String senderUsername) {
-		this.senderUsername = senderUsername;
-	}
-
-	public String getSenderPassword() {
-		return senderPassword;
-	}
-
-	public void setSenderPassword(String senderPassword) {
-		this.senderPassword = senderPassword;
-	}
-
-	public boolean isDebug() {
-		return debug;
-	}
-
-	public void setDebug(boolean debug) {
-		this.debug = debug;
-	}
-
-	private boolean debug = false;
+	/**
+	 * MailClient的配置信息
+	 */
+	private MailClientConfig config;
 
 	private static Properties getProperties(String path) throws IOException {
 		InputStream in = MailClient.class.getClassLoader().getResourceAsStream(path);
@@ -79,13 +45,45 @@ public class MailClient {
 		this(getProperties(path));
 	}
 
-	public MailClient(Properties properties) {
-		this.mailHost = properties.getProperty("mail.smtp.host");
-		this.senderUsername = properties.getProperty("mail.sender.username");
-		this.senderPassword = properties.getProperty("mail.sender.password");
-		this.debug = "true".equals(properties.getProperty("mail.debug")) ? true : false;
-		session = Session.getInstance(properties);
-		session.setDebug(debug);// 开启后有调试信息
+	/**
+	 * 
+	 * @param properties
+	 * @throws IOException
+	 */
+	public MailClient(Properties properties) throws IOException {
+		MailClientConfig config = createMailClientConfig(properties);
+		this.setConfig(config);
+		setSession(Session.getInstance(properties));
+	}
+
+	private static MailClientConfig createMailClientConfig(Properties properties) {
+		MailClientConfig config = new MailClientConfig();
+
+		config.setMailHost(properties.getProperty("mail.smtp.host"));
+		config.setSenderUsername(properties.getProperty("mail.sender.username"));
+		config.setSenderPassword(properties.getProperty("mail.sender.password"));
+		config.setPort(properties.getProperty("mail.smtp.port"));
+		config.setDebug("true".equals(properties.getProperty("mail.debug")) ? true : false);
+		return config;
+	}
+
+	public MailClient(MailClientConfig config) {
+	}
+
+	public MailClientConfig getConfig() {
+		return config;
+	}
+
+	public void setConfig(MailClientConfig config) {
+		this.config = config;
+	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
 	}
 
 }
