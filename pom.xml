@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>cn.aposoft.framework</groupId>
+	<artifactId>framework-parent</artifactId>
+	<version>1.0.0.4-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<distributionManagement>
+		<site>
+			<id>website</id>
+			<url>scp://webhost.company.com/www/website</url>
+		</site>
+	</distributionManagement>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.group>org.springframework</spring.group>
+		<spring.version>3.2.14.RELEASE</spring.version>
+		<javax.inject.version>1.0-PFD-1</javax.inject.version>
+		<junit.version>4.12</junit.version>
+	</properties>
+
+	<modules>
+		<module>common-lang</module>
+		<module>networking-parent</module>
+		<module>deployment-parent</module>
+		<module>schedulers-parent</module>
+    <module>kafka-client-09-extension</module>
+    <module>java-mail-sender</module>
+  </modules>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${javax.inject.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${spring.group}</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- JavaEE Servlet Dependencies -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>javax.servlet.jsp-api</artifactId>
+				<version>2.3.1</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp.jstl</groupId>
+				<artifactId>javax.servlet.jsp.jstl-api</artifactId>
+				<version>1.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+extraProperties=sonar.host.url\=http\://localhost\:9000\r\nsonar.jdbc.password\=sonar\r\nsonar.jdbc.url\=jdbc\:oracle\:thin\:@localhost\:1521/orcl\r\nsonar.jdbc.username\=sonar
+projectKey=cn.aposoft.framework\:common-lang
+serverUrl=http\://localhost\:9000
+version=2

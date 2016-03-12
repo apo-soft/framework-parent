@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Built-By: LiuJian
+Class-Path: lib/commons-io-2.4.jar lib/commons-lang-2.6.jar
+Build-Jdk: 1.8.0_74
+Created-By: Maven Integration for Eclipse
+Main-Class: cn.aposoft.framework.deployment.ComplexApp
+

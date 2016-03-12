@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="simpleTask" class="org.spring.quartz.mongodb.demo.SimpleTask">
+	</bean>
+
+	<bean id="simpleTaskJobDetailFactory" class="cn.aposoft.schedule.quartz.spring.JobDetailFactory">
+		<property name="targetObject" ref="simpleTask" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+		<!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+	</bean>
+
+	<bean id="simpleTaskJobDetail" class="org.quartz.JobDetail"
+		factory-bean="simpleTaskJobDetailFactory" factory-method="getObject">
+	</bean>
+	<bean id="simpleTaskTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="simpleTaskJobDetail" />
+		<property name="cronExpression" value="0/2 * * * * ?" />
+	</bean>
+
+	<bean id="quartzScheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTaskTrigger" />
+			</list>
+		</property>
+		<property name="configLocation" value="classpath:quartz.properties" />
+		<property name="autoStartup" value="true" />
+	</bean>
+</beans>
