@@ -16,7 +16,7 @@ import javax.mail.internet.AddressException;
 public interface MailClient {
 
 	/**
-	 * 以UTF-8的格式发送明文邮件
+	 * 以UTF-8编码发送html格式邮件
 	 * 
 	 * @param from
 	 *            发送人信息
@@ -32,72 +32,7 @@ public interface MailClient {
 			throws AddressException, UnsupportedEncodingException, MessagingException;
 
 	/**
-	 * 以UTF-8的格式发送明文邮件
-	 * 
-	 * @param from
-	 *            发送人信息
-	 * @param to
-	 *            接收人信息
-	 * @param message
-	 *            邮件报文内容
-	 * @throws MessagingException
-	 * @throws UnsupportedEncodingException
-	 * @throws AddressException
-	 */
-	void send(MailContact from, MailRecipient to, MailMessage message)
-			throws AddressException, UnsupportedEncodingException, MessagingException;
-
-	/**
-	 * 以UTF-8的格式发送明文邮件
-	 * 
-	 * @param from
-	 *            发送人信息
-	 * @param to
-	 *            接收人信息
-	 * @param message
-	 *            邮件报文内容
-	 * @throws MessagingException
-	 * @throws UnsupportedEncodingException
-	 */
-	void send(MailContact from, Collection<MailRecipient> tos, MailMessage message)
-			throws UnsupportedEncodingException, MessagingException;
-
-	/**
-	 * 以UTF-8的格式发送明文邮件
-	 * 
-	 * @param from
-	 *            发送人信息
-	 * @param to
-	 *            接收人信息
-	 * @param message
-	 *            邮件报文内容
-	 * @throws MessagingException
-	 * @throws UnsupportedEncodingException
-	 */
-	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs, MailMessage message)
-			throws UnsupportedEncodingException, MessagingException;
-
-	/**
-	 * 以UTF-8的格式发送明文邮件
-	 * 
-	 * @param from
-	 *            发送人信息
-	 * @param tos
-	 *            接收人信息
-	 * @param ccs
-	 *            抄送人
-	 * @param scs
-	 *            密送人
-	 * @param message
-	 *            邮件报文内容
-	 * @throws MessagingException
-	 * @throws UnsupportedEncodingException
-	 */
-	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
-			Collection<MailRecipient> scs, MailMessage message) throws MessagingException, UnsupportedEncodingException;
-
-	/**
-	 * 以UTF-8的格式发送明文邮件
+	 * 发送html格式邮件
 	 * 
 	 * @param from
 	 *            发送人信息
@@ -113,5 +48,72 @@ public interface MailClient {
 	 */
 	void send(MailContact from, MailRecipient to, String subject, String content, String charset)
 			throws AddressException, UnsupportedEncodingException, MessagingException;
+
+	/**
+	 * 简单发送邮件
+	 * 
+	 * @param from
+	 *            发送人信息
+	 * @param to
+	 *            接收人信息
+	 * @param message
+	 *            邮件报文内容 {@link MailMessage}
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 * @throws AddressException
+	 */
+	void send(MailContact from, MailRecipient to, MailMessage message)
+			throws AddressException, UnsupportedEncodingException, MessagingException;
+
+	/**
+	 * 简单发送邮件,可以设置多个收件人TO
+	 * 
+	 * @param from
+	 *            发送人信息
+	 * @param to
+	 *            接收人信息
+	 * @param message
+	 *            邮件报文内容 {@link MailMessage}
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 */
+	void send(MailContact from, Collection<MailRecipient> tos, MailMessage message)
+			throws UnsupportedEncodingException, MessagingException;
+
+	/**
+	 * 简单发送邮件,可以设置多个收件人TO,多个抄送人CC
+	 * 
+	 * @param from
+	 *            发送人信息
+	 * @param tos
+	 *            接收人信息
+	 * @param ccs
+	 *            抄送人信息
+	 * @param message
+	 *            邮件报文内容 {@link MailMessage}
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 */
+	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs, MailMessage message)
+			throws UnsupportedEncodingException, MessagingException;
+
+	/**
+	 * 简单发送邮件,可以设置多个收件人TO,多个抄送人CC,多个密送人BCC
+	 * 
+	 * @param from
+	 *            发送人信息
+	 * @param tos
+	 *            接收人信息
+	 * @param ccs
+	 *            抄送人信息
+	 * @param scs
+	 *            密送人信息
+	 * @param message
+	 *            邮件报文内容 {@link MailMessage}
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 */
+	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
+			Collection<MailRecipient> scs, MailMessage message) throws MessagingException, UnsupportedEncodingException;
 
 }

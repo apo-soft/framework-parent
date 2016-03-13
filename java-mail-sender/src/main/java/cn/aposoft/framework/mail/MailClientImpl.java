@@ -75,7 +75,7 @@ public class MailClientImpl implements MailClient {
 	}
 
 	/**
-	 * 添加附件信息
+	 * 创建MultiPart类型的报文正文信息
 	 * 
 	 * @param message
 	 *            邮件消息
@@ -102,16 +102,17 @@ public class MailClientImpl implements MailClient {
 	}
 
 	/**
-	 * 以UTF-8 + html的形式发送邮件
+	 * 以UTF-8编码发送html格式邮件
 	 * 
 	 * @param from
-	 *            发件人信息
+	 *            发送人信息
 	 * @param to
-	 *            收件人信息
-	 * @param subject
-	 *            邮件标题
+	 *            接收人信息
 	 * @param content
 	 *            邮件正文
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 * @throws AddressException
 	 */
 	@Override
 	public void send(MailContact from, MailRecipient to, String subject, String content)
@@ -120,18 +121,19 @@ public class MailClientImpl implements MailClient {
 	}
 
 	/**
-	 * 以 html的形式发送邮件
+	 * 发送html格式邮件
 	 * 
 	 * @param from
-	 *            发件人信息
+	 *            发送人信息
 	 * @param to
-	 *            收件人信息
-	 * @param subject
-	 *            邮件标题
+	 *            接收人信息
 	 * @param content
 	 *            邮件正文
 	 * @param charset
 	 *            邮件正文编码格式
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 * @throws AddressException
 	 */
 	@Override
 	public void send(MailContact from, MailRecipient to, String subject, String content, String charset)
@@ -141,9 +143,23 @@ public class MailClientImpl implements MailClient {
 		msg.setRecipient(to.getType(), createAddress(to));
 		msg.setSubject(subject);
 		msg.setContent(content, "text/html;charset=" + charset);
+		msg.saveChanges();
 		Transport.send(msg);
 	}
 
+	/**
+	 * 简单发送邮件
+	 * 
+	 * @param from
+	 *            发送人信息
+	 * @param to
+	 *            接收人信息
+	 * @param message
+	 *            邮件报文内容 {@link MailMessage}
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 * @throws AddressException
+	 */
 	@Override
 	public void send(MailContact from, MailRecipient to, MailMessage message)
 			throws AddressException, UnsupportedEncodingException, MessagingException {
@@ -152,18 +168,60 @@ public class MailClientImpl implements MailClient {
 		this.send(from, recipientList, null, null, message);
 	}
 
+	/**
+	 * 简单发送邮件,可以设置多个收件人TO
+	 * 
+	 * @param from
+	 *            发送人信息
+	 * @param to
+	 *            接收人信息
+	 * @param message
+	 *            邮件报文内容 {@link MailMessage}
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 */
 	@Override
 	public void send(MailContact from, Collection<MailRecipient> tos, MailMessage message)
 			throws UnsupportedEncodingException, MessagingException {
 		send(from, tos, null, message);
 	}
 
+	/**
+	 * 简单发送邮件,可以设置多个收件人TO,多个抄送人CC
+	 * 
+	 * @param from
+	 *            发送人信息
+	 * @param tos
+	 *            接收人信息
+	 * @param ccs
+	 *            抄送人信息
+	 * @param message
+	 *            邮件报文内容 {@link MailMessage}
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 */
 	@Override
 	public void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
 			MailMessage message) throws UnsupportedEncodingException, MessagingException {
 		send(from, tos, ccs, null, message);
 	}
 
+	/**
+	 * 简单发送邮件,可以设置多个收件人TO,多个抄送人CC,多个密送人BCC
+	 * 
+	 * @param from
+	 *            发送人信息
+	 * @param tos
+	 *            接收人信息
+	 * @param ccs
+	 *            抄送人信息
+	 * @param scs
+	 *            密送人信息
+	 * @param message
+	 *            邮件报文内容 {@link MailMessage}
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 */
 	@Override
 	public void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
 			Collection<MailRecipient> bccs, MailMessage message)
