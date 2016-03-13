@@ -7,6 +7,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -168,6 +169,7 @@ public class MailClientImplTest {
 	}
 
 	/**
+	 * 
 	 * 可以同时发送两个附件的样例
 	 */
 	@Test
@@ -183,10 +185,10 @@ public class MailClientImplTest {
 					.getBytes("UTF-8");
 			message.addAttachments("notice.html", "text/html;charset=UTF-8", bytes);
 			message.addAttachments("notice.html", "text/html;charset=UTF-8", bytes);
-			List<MailRecipient> recipients = new ArrayList<MailRecipient>(2);
+			List<MailRecipient> recipients = new ArrayList<MailRecipient>(1);
 			recipients.add(createMailRecipient());
 
-			List<MailRecipient> recipientsCc = new ArrayList<MailRecipient>(2);
+			List<MailRecipient> recipientsCc = new ArrayList<MailRecipient>(1);
 			recipientsCc.add(createAnotherMailRecipient());
 			client.send(createMailFrom(), recipients, recipientsCc, message);
 		} catch (UnsupportedEncodingException | MessagingException e) {
@@ -196,13 +198,15 @@ public class MailClientImplTest {
 	}
 
 	/**
-	 * 可以同时发送两个附件的样例
+	 * 可以发送To ,cc, bcc三种接收人,2个附件的使用样例
 	 */
 	@Test
 	public void testSendAttachmentMessageMailToCcAndBcc() {
 
 		MailMessage message = new MailMessage();
 		message.setSubject("CC and BCC独立附件测试邮件");
+		message.setContentType("text/html");
+		message.setCharset(Charset.forName("UTF-8"));
 		message.setContent(
 				"<!DOCTYPE HTML><html><head><meta charset=\"utf-8\"><title>bcc带附件的测试邮件</title></head><body><div>内容详见附件.简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div></body></html>");
 		byte[] bytes;
