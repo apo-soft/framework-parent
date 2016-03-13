@@ -7,7 +7,6 @@ import java.util.Date;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
@@ -58,6 +57,18 @@ public class MailClientImpl implements MailClient {
 		this.session = session;
 	}
 
+	/**
+	 * 以UTF-8 + html的形式发送邮件
+	 * 
+	 * @param from
+	 *            发件人信息
+	 * @param to
+	 *            收件人信息
+	 * @param subject
+	 *            邮件标题
+	 * @param content
+	 *            邮件正文
+	 */
 	@Override
 	public void send(MailContact from, MailRecipient to, String subject, String content)
 			throws AddressException, UnsupportedEncodingException, MessagingException {
@@ -66,6 +77,31 @@ public class MailClientImpl implements MailClient {
 		msg.setRecipient(to.getType(), createAddress(to));
 		msg.setSubject(subject);
 		msg.setContent(content, "text/html;charset=UTF-8");
+		Transport.send(msg);
+	}
+
+	/**
+	 * 以UTF-8 + html的形式发送邮件
+	 * 
+	 * @param from
+	 *            发件人信息
+	 * @param to
+	 *            收件人信息
+	 * @param subject
+	 *            邮件标题
+	 * @param content
+	 *            邮件正文
+	 * @param charset
+	 *            邮件正文编码格式
+	 */
+	@Override
+	public void send(MailContact from, MailRecipient to, String subject, String content, String charset)
+			throws AddressException, UnsupportedEncodingException, MessagingException {
+		Message msg = new MimeMessage(session);
+		msg.setFrom(createAddress(from));
+		msg.setRecipient(to.getType(), createAddress(to));
+		msg.setSubject(subject);
+		msg.setContent(content, "text/html;charset=" + charset);
 		Transport.send(msg);
 	}
 
@@ -94,33 +130,44 @@ public class MailClientImpl implements MailClient {
 			Collection<MailRecipient> bccs, MailMessage message)
 			throws MessagingException, UnsupportedEncodingException {
 		Message msg = new MimeMessage(session);
+		// 设置发送人
 		msg.setFrom(createAddress(from));
+		// 设置接收人
 		if (tos != null) {
 			for (MailRecipient recipient : tos) {
 				msg.addRecipient(RecipientType.TO, createAddress(recipient));
 			}
 		}
+		// 设置抄送人
 		if (ccs != null) {
 			for (MailRecipient recipient : ccs) {
 				msg.addRecipient(RecipientType.CC, createAddress(recipient));
 			}
 		}
+		// 设置 密送人
 		if (bccs != null) {
 			for (MailRecipient recipient : bccs) {
 				msg.addRecipient(RecipientType.BCC, createAddress(recipient));
 			}
 		}
 
+		// 设置邮件主题
 		msg.setSubject(message.getSubject());
-		String type = createType(message);
-		msg.setContent(message.getContent(), type);
-		Multipart multipart = addAttachMent(message);
-		msg.setContent(multipart);
+
+		if (message.getAttachments() == null || message.getAttachments().isEmpty()) {
+			String type = createType(message);
+			msg.setContent(message.getContent(), type);
+		} else {
+			Multipart multipart = createMultiPartContent(message);
+			msg.setContent(multipart);
+		}
+
 		msg.setSentDate(new Date());
 		msg.saveChanges();
 		Transport.send(msg);
 	}
 
+	// 创建Mime的ContentType信息
 	private String createType(MailMessage message) {
 		String s = message.getContentType();
 		if (message.getCharset() != null) {
@@ -135,10 +182,12 @@ public class MailClientImpl implements MailClient {
 	 * @param message
 	 *            邮件消息
 	 */
-	private Multipart addAttachMent(MailMessage message) throws MessagingException, UnsupportedEncodingException {
+	private Multipart createMultiPartContent(MailMessage message)
+			throws MessagingException, UnsupportedEncodingException {
 		Multipart multipart = new MimeMultipart();
+		// 添加邮件正文
 		BodyPart contentPart = new MimeBodyPart();
-		contentPart.setContent(message.getContent(), "text/html;charset=UTF-8");
+		contentPart.setContent(message.getContent(), createType(message));
 		multipart.addBodyPart(contentPart);
 		// 添加附件的内容
 		for (DataSource attachment : message.getAttachments()) {
@@ -148,7 +197,6 @@ public class MailClientImpl implements MailClient {
 			multipart.addBodyPart(attachmentBodyPart);
 		}
 		return multipart;
-
 	}
 
 }
