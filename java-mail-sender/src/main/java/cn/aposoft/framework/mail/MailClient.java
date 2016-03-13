@@ -40,11 +40,12 @@ public interface MailClient {
 	 *            接收人信息
 	 * @param message
 	 *            邮件报文内容
-	 * @throws MessagingException 
-	 * @throws UnsupportedEncodingException 
-	 * @throws AddressException 
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 * @throws AddressException
 	 */
-	void send(MailContact from, MailRecipient to, MailMessage message) throws AddressException, UnsupportedEncodingException, MessagingException;
+	void send(MailContact from, MailRecipient to, MailMessage message)
+			throws AddressException, UnsupportedEncodingException, MessagingException;
 
 	/**
 	 * 以UTF-8的格式发送明文邮件
@@ -58,7 +59,8 @@ public interface MailClient {
 	 * @throws MessagingException
 	 * @throws UnsupportedEncodingException
 	 */
-	void send(MailContact from, Collection<MailRecipient> tos, MailMessage message) throws UnsupportedEncodingException, MessagingException;
+	void send(MailContact from, Collection<MailRecipient> tos, MailMessage message)
+			throws UnsupportedEncodingException, MessagingException;
 
 	/**
 	 * 以UTF-8的格式发送明文邮件
@@ -72,7 +74,8 @@ public interface MailClient {
 	 * @throws MessagingException
 	 * @throws UnsupportedEncodingException
 	 */
-	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs, MailMessage message) throws UnsupportedEncodingException, MessagingException;
+	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs, MailMessage message)
+			throws UnsupportedEncodingException, MessagingException;
 
 	/**
 	 * 以UTF-8的格式发送明文邮件
@@ -92,5 +95,23 @@ public interface MailClient {
 	 */
 	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
 			Collection<MailRecipient> scs, MailMessage message) throws MessagingException, UnsupportedEncodingException;
+
+	/**
+	 * 以UTF-8的格式发送明文邮件
+	 * 
+	 * @param from
+	 *            发送人信息
+	 * @param to
+	 *            接收人信息
+	 * @param content
+	 *            邮件正文
+	 * @param charset
+	 *            邮件正文编码格式
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 * @throws AddressException
+	 */
+	void send(MailContact from, MailRecipient to, String subject, String content, String charset)
+			throws AddressException, UnsupportedEncodingException, MessagingException;
 
 }
