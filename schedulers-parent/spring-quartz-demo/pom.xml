@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>cn.aposoft.framework</groupId>
 		<artifactId>schedulers-parent</artifactId>
-		<version>1.0.0.4-SNAPSHOT</version>
+		<version>1.0.0.4</version>
 	</parent>
 	<artifactId>spring-quartz-demo</artifactId>
 	<name>spring-quartz-demo</name>

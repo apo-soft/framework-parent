@@ -6,11 +6,12 @@
 	<parent>
 		<groupId>cn.aposoft.framework</groupId>
 		<artifactId>framework-parent</artifactId>
-		<version>1.0.0.4-SNAPSHOT</version>
+		<version>1.0.0.4</version>
 	</parent>
 	<artifactId>common-lang</artifactId>
 	<name>common-lang</name>
 	<url>http://maven.apache.org</url>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
