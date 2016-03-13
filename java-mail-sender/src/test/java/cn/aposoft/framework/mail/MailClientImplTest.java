@@ -35,6 +35,13 @@ public class MailClientImplTest {
 		return from;
 	}
 
+	private final MailRecipient createNumAddressMailRecipient() {
+		MailRecipientImpl to = new MailRecipientImpl();
+		to.setName("高俊龙");
+		to.setEmailAddress("5889856@qq.com");
+		return to;
+	}
+
 	private final MailRecipient createMailRecipient() {
 		MailRecipientImpl to = new MailRecipientImpl();
 		to.setName("高俊龙");
@@ -70,13 +77,9 @@ public class MailClientImplTest {
 
 	@Test
 	public void testSendSimpleMail() {
-
-		MailMessage message = new MailMessage();
-		message.setSubject("定制化测试邮件");
-		message.setContent("<div>简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div>");
 		try {
-			client.send(createMailFrom(), createMailRecipient(), "简单测试邮件",
-					"<div>简单的测试邮件内容 <br/>今天是星期日,请注意明日上班. 另注意身体健康</div>");
+			client.send(createMailFrom(), createNumAddressMailRecipient(), "简单测试邮件",
+					"<!DOCTYPE HTML><html><head><meta charset=\"utf-8\"><title>bcc带附件的测试邮件</title></head><body><div>内容详见附件.简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div></body></html>");
 		} catch (UnsupportedEncodingException | MessagingException e) {
 			e.printStackTrace();
 			Assert.fail();
