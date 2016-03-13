@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -12,10 +13,34 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 
+/**
+ * 
+ * @author LiuJian
+ *
+ */
 public class MailClientImpl implements MailClient {
-
+	/**
+	 * 创建联系人(发送人,接收人Address的方法
+	 * 
+	 * @param contact
+	 *            联系人信息
+	 * @return 联系人邮件地址形式
+	 * @throws AddressException
+	 * @throws UnsupportedEncodingException
+	 */
 	private InternetAddress createAddress(MailContact contact) throws AddressException, UnsupportedEncodingException {
-		return new InternetAddress(MimeUtility.encodeWord(contact.getName()) + " <" + contact.getEmailAddress() + ">");
+		if (contact == null) {
+			throw new IllegalArgumentException("contact must not be null.");
+		}
+		if (contact.getEmailAddress() == null || contact.getEmailAddress().isEmpty()) {
+			throw new IllegalArgumentException("email address must not be null.");
+		}
+		if (contact.getName() == null || contact.getName().isEmpty()) {
+			return new InternetAddress(contact.getEmailAddress());
+		} else {
+			return new InternetAddress(
+					MimeUtility.encodeWord(contact.getName()) + " <" + contact.getEmailAddress() + ">");
+		}
 	}
 
 	private Session session;
@@ -42,23 +67,51 @@ public class MailClientImpl implements MailClient {
 	}
 
 	@Override
-	public void send(MailContact from, Collection<MailRecipient> tos, MailMessage message) {
-		// TODO Auto-generated method stub
-
+	public void send(MailContact from, Collection<MailRecipient> tos, MailMessage message)
+			throws UnsupportedEncodingException, MessagingException {
+		send(from, tos, null, message);
 	}
 
 	@Override
 	public void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
-			MailMessage message) {
-		// TODO Auto-generated method stub
-
+			MailMessage message) throws UnsupportedEncodingException, MessagingException {
+		send(from, tos, ccs, null, message);
 	}
 
 	@Override
 	public void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
-			Collection<MailRecipient> scs, MailMessage message) {
-		// TODO Auto-generated method stub
+			Collection<MailRecipient> bccs, MailMessage message)
+			throws MessagingException, UnsupportedEncodingException {
+		Message msg = new MimeMessage(session);
+		msg.setFrom(createAddress(from));
+		if (tos != null) {
+			for (MailRecipient recipient : tos) {
+				msg.addRecipient(RecipientType.TO, createAddress(recipient));
+			}
+		}
+		if (ccs != null) {
+			for (MailRecipient recipient : ccs) {
+				msg.addRecipient(RecipientType.CC, createAddress(recipient));
+			}
+		}
+		if (bccs != null) {
+			for (MailRecipient recipient : bccs) {
+				msg.addRecipient(RecipientType.BCC, createAddress(recipient));
+			}
+		}
 
+		msg.setSubject(message.getSubject());
+		String type = createType(message);
+		msg.setContent(message.getContent(), type);
+		Transport.send(msg);
+	}
+
+	private String createType(MailMessage message) {
+		String s = message.getContentType();
+		if (message.getCharset() != null) {
+			s += ";charset=" + message.getCharset().name();
+		}
+		return s;
 	}
 
 }
