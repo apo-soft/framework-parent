@@ -22,6 +22,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
 /**
+ * MailClient 的默认实现类
  * 
  * @author LiuJian
  *

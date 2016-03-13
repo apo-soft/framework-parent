@@ -124,9 +124,14 @@ public class JavaMail {
 		}
 	}
 
+	/**
+	 * 测试邮件发送入口方法
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		/*JavaMail se = new JavaMail(true);
+		JavaMail se = new JavaMail(true);
 		se.doSendHtmlEmail("测试自动发送邮件", "<html><head><title>测试邮件标题</title></head><body>测试发送的邮件的内容</body></html>", "高俊龙",
-				"pleasantboy@163.com");*/
+				"pleasantboy@qq.com");
 	}
 }
