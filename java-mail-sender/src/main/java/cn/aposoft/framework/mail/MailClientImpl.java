@@ -37,15 +37,13 @@ public class MailClientImpl implements MailClient {
 
 	@Override
 	public void send(MailContact from, MailRecipient to, MailMessage message) 
-			throws AddressException, UnsupportedEncodingException, MessagingException {
+			throws AddressException, UnsupportedEncodingException, MessagingException  {
 		Message msg = new MimeMessage(session);
 		msg.setFrom(createAddress(from));
 		msg.setRecipient(to.getType(), createAddress(to));
 		msg.setSubject(message.getSubject());
 		msg.setContent(message.getContent(),  "text/html;charset=UTF-8");
-		msg.setAttachments(message.getAttachments());
 		
-		msg.setRecipients(Message.RecipientType.TO, paramArrayOfAddress);
 		
 	}
 

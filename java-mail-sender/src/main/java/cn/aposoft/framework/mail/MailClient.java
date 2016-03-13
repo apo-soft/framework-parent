@@ -28,7 +28,9 @@ public interface MailClient {
 	 * @throws UnsupportedEncodingException
 	 * @throws AddressException
 	 */
-	void send(MailContact from, MailRecipient to, String subject, String content) throws AddressException, UnsupportedEncodingException, MessagingException;
+
+	void send(MailContact from, MailRecipient to, String subject, String content)
+			throws AddressException, UnsupportedEncodingException, MessagingException;
 
 	/**
 	 * 以UTF-8的格式发送明文邮件
@@ -39,8 +41,11 @@ public interface MailClient {
 	 *            接收人信息
 	 * @param message
 	 *            邮件报文内容
+	 * @throws MessagingException 
+	 * @throws UnsupportedEncodingException 
+	 * @throws AddressException 
 	 */
-	void send(MailContact from, MailRecipient to, MailMessage message);
+	void send(MailContact from, MailRecipient to, MailMessage message) throws AddressException, UnsupportedEncodingException, MessagingException;
 
 	/**
 	 * 以UTF-8的格式发送明文邮件
@@ -51,8 +56,11 @@ public interface MailClient {
 	 *            接收人信息
 	 * @param message
 	 *            邮件报文内容
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
 	 */
-	void send(MailContact from, Collection<MailRecipient> tos, MailMessage message);
+
+	void send(MailContact from, Collection<MailRecipient> tos, MailMessage message) throws UnsupportedEncodingException, MessagingException;
 
 	/**
 	 * 以UTF-8的格式发送明文邮件
@@ -63,8 +71,11 @@ public interface MailClient {
 	 *            接收人信息
 	 * @param message
 	 *            邮件报文内容
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
 	 */
-	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs, MailMessage message);
+
+	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs, MailMessage message) throws UnsupportedEncodingException, MessagingException;
 
 	/**
 	 * 以UTF-8的格式发送明文邮件
@@ -79,8 +90,11 @@ public interface MailClient {
 	 *            密送人
 	 * @param message
 	 *            邮件报文内容
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
 	 */
 	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
-			Collection<MailRecipient> scs, MailMessage message);
+
+			Collection<MailRecipient> scs, MailMessage message) throws MessagingException, UnsupportedEncodingException;
 
 }
