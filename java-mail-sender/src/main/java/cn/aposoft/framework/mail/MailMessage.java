@@ -6,6 +6,8 @@ package cn.aposoft.framework.mail;
 import java.io.File;
 import java.util.Collection;
 
+import javax.activation.DataSource;
+
 /**
  * 邮件消息:包括邮件标题,正文,附件
  * 
@@ -16,7 +18,7 @@ public class MailMessage extends MailContent {
 	// 邮件标题
 	private String subject;
 	// 邮件附件
-	private Collection<File> attachments;
+	private Collection<DataSource> attachments;
 
 	/**
 	 * 邮件标题
@@ -35,14 +37,14 @@ public class MailMessage extends MailContent {
 	/**
 	 * 邮件附件
 	 */
-	public Collection<File> getAttachments() {
+	public Collection<DataSource> getAttachments() {
 		return attachments;
 	}
 
 	/**
 	 * 邮件附件
 	 */
-	public void setAttachments(Collection<File> attachments) {
+	public void setAttachments(Collection<DataSource> attachments) {
 		this.attachments = attachments;
 	}
 
