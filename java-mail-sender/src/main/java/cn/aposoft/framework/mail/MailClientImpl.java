@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
@@ -142,8 +143,8 @@ public class MailClientImpl implements MailClient {
 		// 添加附件的内容
 		for (DataSource attachment : message.getAttachments()) {
 			BodyPart attachmentBodyPart = new MimeBodyPart();
-			attachmentBodyPart.setDataHandler(new DataHandler(attachment));
 			attachmentBodyPart.setFileName(MimeUtility.encodeWord(attachment.getName()));
+			attachmentBodyPart.setDataHandler(new DataHandler(attachment));
 			multipart.addBodyPart(attachmentBodyPart);
 		}
 		return multipart;
