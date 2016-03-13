@@ -28,8 +28,9 @@ public class MailContactImpl implements MailContact {
 	 * @param name
 	 *            待设置的称呼
 	 */
-	public void setName(String name) {
+	public MailContactImpl setName(String name) {
 		this.name = name;
+		return this;
 	}
 
 	/**
@@ -45,8 +46,9 @@ public class MailContactImpl implements MailContact {
 	 * @param emailAddress
 	 *            待设置的邮件地址
 	 */
-	public void setEmailAddress(String emailAddress) {
+	public MailContactImpl setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+		return this;
 	}
 
 }
