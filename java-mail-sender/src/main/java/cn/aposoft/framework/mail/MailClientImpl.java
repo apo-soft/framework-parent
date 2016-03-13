@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
+import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
