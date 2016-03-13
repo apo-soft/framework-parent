@@ -32,20 +32,44 @@ public class MailRecipientImpl extends MailContactImpl implements MailRecipient 
 	 *            联系人名称
 	 * @param emailAddress
 	 *            联系人邮件地址
+	 * @param 收信人类型
+	 *            {@link RecipientType}
 	 * @return 联系人实例
 	 */
 	public static MailRecipient create(String name, String emailAddress, RecipientType type) {
 		return new MailRecipientImpl(name, emailAddress, type);
 	}
 
+	/**
+	 * 创建联系人实例
+	 * 
+	 */
 	public MailRecipientImpl() {
 
 	}
 
+	/**
+	 * 创建联系人实例
+	 * 
+	 * @param name
+	 *            联系人名称
+	 * @param emailAddress
+	 *            联系人邮件地址
+	 */
 	public MailRecipientImpl(String name, String emailAddress) {
 		super(name, emailAddress);
 	}
 
+	/**
+	 * 创建联系人实例
+	 * 
+	 * @param name
+	 *            联系人名称
+	 * @param emailAddress
+	 *            联系人邮件地址
+	 * @param 收信人类型
+	 *            {@link RecipientType}
+	 */
 	public MailRecipientImpl(String name, String emailAddress, RecipientType type) {
 		super(name, emailAddress);
 		this.type = type;
