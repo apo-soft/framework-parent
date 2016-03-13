@@ -4,10 +4,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
-import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
@@ -30,7 +30,8 @@ import javax.mail.internet.MimeUtility;
  */
 public class MailClientImpl implements MailClient {
 	private static final String DEFAULT_TYPE = "text/html";
-
+	private static final String MAIL_ADDRESS_REGEX = "^[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*"
+			+ "@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?$";
 	private Session session;
 
 	/**
@@ -43,11 +44,16 @@ public class MailClientImpl implements MailClient {
 	 * @throws UnsupportedEncodingException
 	 */
 	private InternetAddress createAddress(MailContact contact) throws AddressException, UnsupportedEncodingException {
+
 		if (contact == null) {
 			throw new IllegalArgumentException("contact must not be null.");
 		}
 		if (contact.getEmailAddress() == null || contact.getEmailAddress().isEmpty()) {
 			throw new IllegalArgumentException("email address must not be null.");
+		}
+		// 验证邮箱地址合法性
+		if (!Pattern.matches(MAIL_ADDRESS_REGEX, contact.getEmailAddress())) {
+			throw new IllegalArgumentException("email address is not legal.");
 		}
 		if (contact.getName() == null || contact.getName().isEmpty()) {
 			return new InternetAddress(contact.getEmailAddress());
@@ -110,16 +116,11 @@ public class MailClientImpl implements MailClient {
 	@Override
 	public void send(MailContact from, MailRecipient to, String subject, String content)
 			throws AddressException, UnsupportedEncodingException, MessagingException {
-		Message msg = new MimeMessage(session);
-		msg.setFrom(createAddress(from));
-		msg.setRecipient(to.getType(), createAddress(to));
-		msg.setSubject(subject);
-		msg.setContent(content, "text/html;charset=UTF-8");
-		Transport.send(msg);
+		send(from, to, subject, content, "UTF-8");
 	}
 
 	/**
-	 * 以UTF-8 + html的形式发送邮件
+	 * 以 html的形式发送邮件
 	 * 
 	 * @param from
 	 *            发件人信息
