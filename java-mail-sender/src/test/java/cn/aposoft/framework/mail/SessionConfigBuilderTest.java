@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.aposoft.framework.mail.demo;
+package cn.aposoft.framework.mail;
 
 import org.junit.Test;
 
