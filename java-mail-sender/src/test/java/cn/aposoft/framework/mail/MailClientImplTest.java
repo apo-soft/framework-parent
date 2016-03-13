@@ -35,17 +35,31 @@ public class MailClientImplTest {
 		return from;
 	}
 
-	private final MailRecipient createMailRecipient() {
+	private final MailRecipient createNumAddressMailRecipient() {
 		MailRecipientImpl to = new MailRecipientImpl();
 		to.setName("高俊龙");
 		to.setEmailAddress("5889856@qq.com");
 		return to;
 	}
 
+	private final MailRecipient createMailRecipient() {
+		MailRecipientImpl to = new MailRecipientImpl();
+		to.setName("高俊龙");
+		to.setEmailAddress("pleasantboy@163.com");
+		return to;
+	}
+
 	private final MailRecipient createAnotherMailRecipient() {
 		MailRecipientImpl to = new MailRecipientImpl();
 		to.setName("高俊龙");
-		to.setEmailAddress("1293485767@qq.com");
+		to.setEmailAddress("aposoft@qq.com");
+		return to;
+	}
+
+	private MailRecipient creatBccMailRecipient() {
+		MailRecipientImpl to = new MailRecipientImpl();
+		to.setName("于津水");
+		to.setEmailAddress("pleasantboy@qq.com");
 		return to;
 	}
 
@@ -63,13 +77,9 @@ public class MailClientImplTest {
 
 	@Test
 	public void testSendSimpleMail() {
-
-		MailMessage message = new MailMessage();
-		message.setSubject("定制化测试邮件");
-		message.setContent("<div>简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div>");
 		try {
-			client.send(createMailFrom(), createMailRecipient(), "简单测试邮件",
-					"<div>简单的测试邮件内容 <br/>今天是星期日,请注意明日上班. 另注意身体健康</div>");
+			client.send(createMailFrom(), createNumAddressMailRecipient(), "简单测试邮件",
+					"<!DOCTYPE HTML><html><head><meta charset=\"utf-8\"><title>bcc带附件的测试邮件</title></head><body><div>内容详见附件.简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div></body></html>");
 		} catch (UnsupportedEncodingException | MessagingException e) {
 			e.printStackTrace();
 			Assert.fail();
@@ -95,7 +105,8 @@ public class MailClientImplTest {
 
 		MailMessage message = new MailMessage();
 		message.setSubject("双接收人,测试邮件");
-		message.setContent("<div>简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div>");
+		message.setContent(
+				"<!DOCTYPE HTML><html><head><meta charset=\"utf-8\"><title>bcc带附件的测试邮件</title></head><body><div>内容详见附件.简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div></body></html>");
 		List<MailRecipient> recipients = new ArrayList<MailRecipient>(2);
 		recipients.add(createMailRecipient());
 		recipients.add(createAnotherMailRecipient());
@@ -108,7 +119,7 @@ public class MailClientImplTest {
 	}
 
 	/**
-	 * 可以连续发送两个附件的样例
+	 * 可以同时发送两个附件的样例
 	 */
 	@Test
 	public void testSendAttachmentMessageMail() {
@@ -131,7 +142,7 @@ public class MailClientImplTest {
 	}
 
 	/**
-	 * 可以连续发送InputStream附件的样例
+	 * 可以发送InputStream附件的样例
 	 */
 	@Test
 	public void testSendInputStreamAttachmentMessageMail() {
@@ -151,6 +162,64 @@ public class MailClientImplTest {
 			e.printStackTrace();
 			Assert.fail();
 		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+
+	/**
+	 * 可以同时发送两个附件的样例
+	 */
+	@Test
+	public void testSendAttachmentMessageMailToCc() {
+
+		MailMessage message = new MailMessage();
+		message.setSubject("附件测试邮件");
+		message.setContent(
+				"<!DOCTYPE HTML><html><head><meta charset=\"utf-8\"><title>带附件的测试邮件</title></head><body><div>内容详见附件.简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div></body></html>");
+		byte[] bytes;
+		try {
+			bytes = "<!DOCTYPE HTML><html><head><meta charset=\"utf-8\"><title>测试附件正文</title></head><body><div>简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div></body></html>"
+					.getBytes("UTF-8");
+			message.addAttachments("notice.html", "text/html;charset=UTF-8", bytes);
+			message.addAttachments("notice.html", "text/html;charset=UTF-8", bytes);
+			List<MailRecipient> recipients = new ArrayList<MailRecipient>(2);
+			recipients.add(createMailRecipient());
+
+			List<MailRecipient> recipientsCc = new ArrayList<MailRecipient>(2);
+			recipientsCc.add(createAnotherMailRecipient());
+			client.send(createMailFrom(), recipients, recipientsCc, message);
+		} catch (UnsupportedEncodingException | MessagingException e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+
+	/**
+	 * 可以同时发送两个附件的样例
+	 */
+	@Test
+	public void testSendAttachmentMessageMailToCcAndBcc() {
+
+		MailMessage message = new MailMessage();
+		message.setSubject("CC and BCC独立附件测试邮件");
+		message.setContent(
+				"<!DOCTYPE HTML><html><head><meta charset=\"utf-8\"><title>bcc带附件的测试邮件</title></head><body><div>内容详见附件.简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div></body></html>");
+		byte[] bytes;
+		try {
+			bytes = "<!DOCTYPE HTML><html><head><meta charset=\"utf-8\"><title>测试附件正文</title></head><body><div>简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div></body></html>"
+					.getBytes("UTF-8");
+			message.addAttachments("notice.html", "text/html;charset=UTF-8", bytes);
+			message.addAttachments("notice.html", "text/html;charset=UTF-8", bytes);
+			List<MailRecipient> recipients = new ArrayList<MailRecipient>(1);
+			recipients.add(createMailRecipient());
+
+			List<MailRecipient> recipientsCc = new ArrayList<MailRecipient>(1);
+			recipientsCc.add(createAnotherMailRecipient());
+			List<MailRecipient> recipientsBcc = new ArrayList<MailRecipient>(1);
+			recipientsBcc.add(creatBccMailRecipient());
+			client.send(createMailFrom(), recipients, recipientsCc, recipientsBcc, message);
+		} catch (UnsupportedEncodingException | MessagingException e) {
 			e.printStackTrace();
 			Assert.fail();
 		}
