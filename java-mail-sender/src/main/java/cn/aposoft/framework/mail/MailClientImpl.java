@@ -28,6 +28,10 @@ import javax.mail.internet.MimeUtility;
  *
  */
 public class MailClientImpl implements MailClient {
+	private static final String DEFAULT_TYPE = "text/html";
+
+	private Session session;
+
 	/**
 	 * 创建联系人(发送人,接收人Address的方法
 	 * 
@@ -52,7 +56,39 @@ public class MailClientImpl implements MailClient {
 		}
 	}
 
-	private Session session;
+	// 创建Mime的ContentType信息
+	private String createType(MailMessage message) {
+		String s = message.getContentType() == null ? DEFAULT_TYPE : message.getContentType();
+		if (message.getCharset() != null) {
+			s += ";charset=" + message.getCharset().name();
+		} else {
+			s += ";charset=UTF-8";
+		}
+		return s;
+	}
+
+	/**
+	 * 添加附件信息
+	 * 
+	 * @param message
+	 *            邮件消息
+	 */
+	private Multipart createMultiPartContent(MailMessage message)
+			throws MessagingException, UnsupportedEncodingException {
+		Multipart multipart = new MimeMultipart();
+		// 添加邮件正文
+		BodyPart contentPart = new MimeBodyPart();
+		contentPart.setContent(message.getContent(), createType(message));
+		multipart.addBodyPart(contentPart);
+		// 添加附件的内容
+		for (DataSource attachment : message.getAttachments()) {
+			BodyPart attachmentBodyPart = new MimeBodyPart();
+			attachmentBodyPart.setFileName(MimeUtility.encodeWord(attachment.getName()));
+			attachmentBodyPart.setDataHandler(new DataHandler(attachment));
+			multipart.addBodyPart(attachmentBodyPart);
+		}
+		return multipart;
+	}
 
 	public MailClientImpl(Session session) {
 		this.session = session;
@@ -166,38 +202,6 @@ public class MailClientImpl implements MailClient {
 		msg.setSentDate(new Date());
 		msg.saveChanges();
 		Transport.send(msg);
-	}
-
-	// 创建Mime的ContentType信息
-	private String createType(MailMessage message) {
-		String s = message.getContentType();
-		if (message.getCharset() != null) {
-			s += ";charset=" + message.getCharset().name();
-		}
-		return s;
-	}
-
-	/**
-	 * 添加附件信息
-	 * 
-	 * @param message
-	 *            邮件消息
-	 */
-	private Multipart createMultiPartContent(MailMessage message)
-			throws MessagingException, UnsupportedEncodingException {
-		Multipart multipart = new MimeMultipart();
-		// 添加邮件正文
-		BodyPart contentPart = new MimeBodyPart();
-		contentPart.setContent(message.getContent(), createType(message));
-		multipart.addBodyPart(contentPart);
-		// 添加附件的内容
-		for (DataSource attachment : message.getAttachments()) {
-			BodyPart attachmentBodyPart = new MimeBodyPart();
-			attachmentBodyPart.setFileName(MimeUtility.encodeWord(attachment.getName()));
-			attachmentBodyPart.setDataHandler(new DataHandler(attachment));
-			multipart.addBodyPart(attachmentBodyPart);
-		}
-		return multipart;
 	}
 
 }

@@ -21,8 +21,9 @@ public class MailRecipientImpl extends MailContactImpl implements MailRecipient 
 	 *            {@link RecipientType}
 	 * 
 	 */
-	public void setType(RecipientType type) {
+	public MailRecipientImpl setType(RecipientType type) {
 		this.type = type;
+		return this;
 	}
 
 	/**
