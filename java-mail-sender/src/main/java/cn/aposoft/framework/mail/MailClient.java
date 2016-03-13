@@ -28,7 +28,6 @@ public interface MailClient {
 	 * @throws UnsupportedEncodingException
 	 * @throws AddressException
 	 */
-
 	void send(MailContact from, MailRecipient to, String subject, String content)
 			throws AddressException, UnsupportedEncodingException, MessagingException;
 
@@ -59,7 +58,6 @@ public interface MailClient {
 	 * @throws MessagingException
 	 * @throws UnsupportedEncodingException
 	 */
-
 	void send(MailContact from, Collection<MailRecipient> tos, MailMessage message) throws UnsupportedEncodingException, MessagingException;
 
 	/**
@@ -74,7 +72,6 @@ public interface MailClient {
 	 * @throws MessagingException
 	 * @throws UnsupportedEncodingException
 	 */
-
 	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs, MailMessage message) throws UnsupportedEncodingException, MessagingException;
 
 	/**
@@ -94,7 +91,6 @@ public interface MailClient {
 	 * @throws UnsupportedEncodingException
 	 */
 	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
-
 			Collection<MailRecipient> scs, MailMessage message) throws MessagingException, UnsupportedEncodingException;
 
 }
