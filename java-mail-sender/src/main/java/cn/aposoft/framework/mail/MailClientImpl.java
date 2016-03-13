@@ -143,9 +143,8 @@ public class MailClientImpl implements MailClient {
 		// 添加附件的内容
 		for (DataSource attachment : message.getAttachments()) {
 			BodyPart attachmentBodyPart = new MimeBodyPart();
-			DataSource source = new FileDataSource(attachment.getName());
-			attachmentBodyPart.setDataHandler(new DataHandler(source));
 			attachmentBodyPart.setFileName(MimeUtility.encodeWord(attachment.getName()));
+			attachmentBodyPart.setDataHandler(new DataHandler(attachment));
 			multipart.addBodyPart(attachmentBodyPart);
 		}
 		return multipart;
