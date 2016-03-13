@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.aposoft.framework.mail;
+package cn.aposoft.framework.mail.demo;
 
 /**
  * @author LiuJian

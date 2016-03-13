@@ -1,4 +1,4 @@
-package cn.aposoft.framework.mail;
+package cn.aposoft.framework.mail.demo;
 
 import java.util.Date;
 

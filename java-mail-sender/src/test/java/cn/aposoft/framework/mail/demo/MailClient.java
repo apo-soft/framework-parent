@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.aposoft.framework.mail;
+package cn.aposoft.framework.mail.demo;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,9 +60,10 @@ public class MailClient {
 		MailClientConfig config = new MailClientConfig();
 
 		config.setMailHost(properties.getProperty("mail.smtp.host"));
+		config.setPort(properties.getProperty("mail.smtp.port"));
 		config.setSenderUsername(properties.getProperty("mail.sender.username"));
 		config.setSenderPassword(properties.getProperty("mail.sender.password"));
-		config.setPort(properties.getProperty("mail.smtp.port"));
+
 		config.setDebug("true".equals(properties.getProperty("mail.debug")) ? true : false);
 		return config;
 	}

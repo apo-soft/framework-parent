@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.aposoft.framework.mail;
+package cn.aposoft.framework.mail.demo;
 
 /**
  * 简单邮件报文对象

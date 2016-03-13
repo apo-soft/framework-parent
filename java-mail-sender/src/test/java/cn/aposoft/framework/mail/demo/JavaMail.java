@@ -1,12 +1,13 @@
 /**
  * 
  */
-package cn.aposoft.framework.mail;
+package cn.aposoft.framework.mail.demo;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -14,6 +15,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
+
+import cn.aposoft.framework.mail.PasswordAuthenticator;
 
 /**
  * @author LiuJian
@@ -61,7 +64,11 @@ public class JavaMail {
 			e.printStackTrace();
 		}
 
-		session = Session.getInstance(properties);
+		properties.remove("mail.sender.username");
+		properties.remove("mail.sender.password");
+
+		Authenticator authenticator = new PasswordAuthenticator(sender_username, sender_password);
+		session = Session.getInstance(properties, authenticator);
 		session.setDebug(debug);// 开启后有调试信息
 		message = new MimeMessage(session);
 	}
@@ -120,6 +127,6 @@ public class JavaMail {
 	public static void main(String[] args) {
 		JavaMail se = new JavaMail(true);
 		se.doSendHtmlEmail("测试自动发送邮件", "<html><head><title>测试邮件标题</title></head><body>测试发送的邮件的内容</body></html>", "高俊龙",
-				"947422186@qq.com");
+				"pleasantboy@163.com");
 	}
 }
