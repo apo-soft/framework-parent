@@ -10,6 +10,38 @@ package cn.aposoft.framework.mail;
  *
  */
 public class MailContactImpl implements MailContact {
+	/**
+	 * 创建联系人实例
+	 * 
+	 * @param name
+	 *            联系人名称
+	 * @param emailAddress
+	 *            联系人邮件地址
+	 * @return 联系人实例
+	 */
+	public static MailContact create(String name, String emailAddress) {
+		return new MailContactImpl(name, emailAddress);
+	}
+
+	/**
+	 * 默认联系人构造函数
+	 */
+	public MailContactImpl() {
+	}
+
+	/**
+	 * 联系人构造函数
+	 * 
+	 * @param name
+	 *            联系人名称
+	 * @param emailAddress
+	 *            联系人邮件地址
+	 */
+	public MailContactImpl(String name, String emailAddress) {
+		this.name = name;
+		this.emailAddress = emailAddress;
+	}
+
 	// 称呼
 	private String name;
 	// 邮件地址
