@@ -102,7 +102,8 @@ public class MailClientImplTest {
 
 		MailMessage message = new MailMessage();
 		message.setSubject("双接收人,测试邮件");
-		message.setContent("<div>简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div>");
+		message.setContent(
+				"<!DOCTYPE HTML><html><head><meta charset=\"utf-8\"><title>bcc带附件的测试邮件</title></head><body><div>内容详见附件.简单的测试邮件内容 <br/>今天是星期日,请注意明日上班.</div></body></html>");
 		List<MailRecipient> recipients = new ArrayList<MailRecipient>(2);
 		recipients.add(createMailRecipient());
 		recipients.add(createAnotherMailRecipient());
