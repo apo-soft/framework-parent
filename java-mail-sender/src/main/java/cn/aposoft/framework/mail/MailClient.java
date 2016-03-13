@@ -3,7 +3,6 @@
  */
 package cn.aposoft.framework.mail;
 
-import java.io.File;
 import java.util.Collection;
 
 /**
@@ -46,7 +45,7 @@ public interface MailClient {
 	 * @param message
 	 *            邮件报文内容
 	 */
-	void send(MailContact from, Collection<MailReceiver> tos, , MailMessage message);
+	void send(MailContact from, Collection<MailReceiver> tos, MailMessage message);
 
 	/**
 	 * 以UTF-8的格式发送明文邮件

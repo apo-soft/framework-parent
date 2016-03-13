@@ -25,7 +25,7 @@ public class MailClientImpl implements MailClient {
 	}
 
 	@Override
-	public void send(MailContact from, Collection<MailReceiver> tos) {
+	public void send(MailContact from, Collection<MailReceiver> tos, MailMessage message) {
 		// TODO Auto-generated method stub
 
 	}
@@ -34,6 +34,7 @@ public class MailClientImpl implements MailClient {
 	public void send(MailContact from, Collection<MailReceiver> tos, Collection<MailReceiver> ccs,
 			MailMessage message) {
 		// TODO Auto-generated method stub
+
 	}
 
 	@Override
