@@ -64,8 +64,8 @@ public class SSLJavaMailSender {
 
 		msg.setFrom(new InternetAddress(MimeUtility.encodeWord("刘健") + "<" + username + ">"));
 
-		InternetAddress[] paramArrayOfAddress = InternetAddress
-				.parse(MimeUtility.encodeWord("刘亚") + "<pleasantboy@qq.com>");
+		InternetAddress[] paramArrayOfAddress = InternetAddress.parse(MimeUtility.encodeWord("刘健")
+				+ "<pleasantboy@163.com>" + "," + MimeUtility.encodeWord("高俊龙") + "<pleasantboy@qq.com>");
 
 		msg.setRecipients(Message.RecipientType.TO, paramArrayOfAddress);
 

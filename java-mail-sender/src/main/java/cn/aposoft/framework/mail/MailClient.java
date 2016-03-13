@@ -3,8 +3,11 @@
  */
 package cn.aposoft.framework.mail;
 
-import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 /**
  * @author LiuJian
@@ -21,8 +24,11 @@ public interface MailClient {
 	 *            接收人信息
 	 * @param content
 	 *            邮件正文
+	 * @throws MessagingException
+	 * @throws UnsupportedEncodingException
+	 * @throws AddressException
 	 */
-	void send(MailContact from, MailReceiver to, String subject, String content);
+	void send(MailContact from, MailRecipient to, String subject, String content) throws AddressException, UnsupportedEncodingException, MessagingException;
 
 	/**
 	 * 以UTF-8的格式发送明文邮件
@@ -34,7 +40,7 @@ public interface MailClient {
 	 * @param message
 	 *            邮件报文内容
 	 */
-	void send(MailContact from, MailReceiver to, MailMessage message);
+	void send(MailContact from, MailRecipient to, MailMessage message);
 
 	/**
 	 * 以UTF-8的格式发送明文邮件
@@ -46,7 +52,7 @@ public interface MailClient {
 	 * @param message
 	 *            邮件报文内容
 	 */
-	void send(MailContact from, Collection<MailReceiver> tos, , MailMessage message);
+	void send(MailContact from, Collection<MailRecipient> tos, MailMessage message);
 
 	/**
 	 * 以UTF-8的格式发送明文邮件
@@ -58,7 +64,7 @@ public interface MailClient {
 	 * @param message
 	 *            邮件报文内容
 	 */
-	void send(MailContact from, Collection<MailReceiver> tos, Collection<MailReceiver> ccs, MailMessage message);
+	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs, MailMessage message);
 
 	/**
 	 * 以UTF-8的格式发送明文邮件
@@ -74,7 +80,7 @@ public interface MailClient {
 	 * @param message
 	 *            邮件报文内容
 	 */
-	void send(MailContact from, Collection<MailReceiver> tos, Collection<MailReceiver> ccs,
-			Collection<MailReceiver> scs, MailMessage message);
+	void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
+			Collection<MailRecipient> scs, MailMessage message);
 
 }

@@ -1,10 +1,22 @@
 package cn.aposoft.framework.mail;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 
 public class MailClientImpl implements MailClient {
+
+	private InternetAddress createAddress(MailContact contact) throws AddressException, UnsupportedEncodingException {
+		return new InternetAddress(MimeUtility.encodeWord(contact.getName()) + " <" + contact.getEmailAddress() + ">");
+	}
 
 	private Session session;
 
@@ -13,32 +25,46 @@ public class MailClientImpl implements MailClient {
 	}
 
 	@Override
-	public void send(MailContact from, MailReceiver to, String subject, String content) {
+	public void send(MailContact from, MailRecipient to, String subject, String content)
+			throws AddressException, UnsupportedEncodingException, MessagingException {
+		Message msg = new MimeMessage(session);
+		msg.setFrom(createAddress(from));
+		msg.setRecipient(to.getType(), createAddress(to));
+		msg.setSubject(subject);
+		msg.setContent(content, "text/html;charset=UTF-8");
+		Transport.send(msg);
+	}
+
+	@Override
+	public void send(MailContact from, MailRecipient to, MailMessage message) 
+			throws AddressException, UnsupportedEncodingException, MessagingException {
+		Message msg = new MimeMessage(session);
+		msg.setFrom(createAddress(from));
+		msg.setRecipient(to.getType(), createAddress(to));
+		msg.setSubject(message.getSubject());
+		msg.setContent(message.getContent(),  "text/html;charset=UTF-8");
+		msg.setAttachments(message.getAttachments());
+		
+		msg.setRecipients(Message.RecipientType.TO, paramArrayOfAddress);
+		
+	}
+
+	@Override
+	public void send(MailContact from, Collection<MailRecipient> tos, MailMessage message) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void send(MailContact from, MailReceiver to, MailMessage message) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void send(MailContact from, Collection<MailReceiver> tos) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void send(MailContact from, Collection<MailReceiver> tos, Collection<MailReceiver> ccs,
+	public void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
 			MailMessage message) {
 		// TODO Auto-generated method stub
+
 	}
 
 	@Override
-	public void send(MailContact from, Collection<MailReceiver> tos, Collection<MailReceiver> ccs,
-			Collection<MailReceiver> scs, MailMessage message) {
+	public void send(MailContact from, Collection<MailRecipient> tos, Collection<MailRecipient> ccs,
+			Collection<MailRecipient> scs, MailMessage message) {
 		// TODO Auto-generated method stub
 
 	}

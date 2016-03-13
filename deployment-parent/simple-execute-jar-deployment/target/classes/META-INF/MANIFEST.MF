@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-Built-By: LiuJian
-Build-Jdk: 1.8.0_74
+Build-Jdk: 1.7.0_79
+Built-By: gao
 Created-By: Maven Integration for Eclipse
 Main-Class: cn.aposoft.framework.deployment.SayHelloWorld
 
