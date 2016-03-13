@@ -3,7 +3,6 @@
  */
 package cn.aposoft.framework.mail;
 
-import java.io.File;
 import java.util.Collection;
 
 import javax.activation.DataSource;
