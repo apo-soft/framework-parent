@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>cn.aposoft.framework</groupId>
 		<artifactId>schedulers-parent</artifactId>
-		<version>1.0.0.4</version>
+		<version>1.0.0.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>quartz-jobstore-mysql-demo</artifactId>
 	<name>quartz-jobstore-mysql-demo</name>
