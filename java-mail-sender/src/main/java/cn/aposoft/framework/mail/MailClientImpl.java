@@ -4,9 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 
 import javax.mail.Message;
-import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -29,13 +29,10 @@ public class MailClientImpl implements MailClient {
 			throws AddressException, UnsupportedEncodingException, MessagingException {
 		Message msg = new MimeMessage(session);
 		msg.setFrom(createAddress(from));
-		RecipientType type = getRecipientType(to);
-		msg.setRecipient(type, createAddress(to));
-	}
-
-	private RecipientType getRecipientType(MailRecipient to) {
-
-		return null;
+		msg.setRecipient(to.getType(), createAddress(to));
+		msg.setSubject(subject);
+		msg.setContent(content, "text/html;charset=UTF-8");
+		Transport.send(msg);
 	}
 
 	@Override
