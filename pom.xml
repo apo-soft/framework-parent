@@ -36,6 +36,8 @@
 		<spring.version>3.2.14.RELEASE</spring.version>
 		<javax.inject.version>1.0-PFD-1</javax.inject.version>
 		<junit.version>4.12</junit.version>
+		<org.slf4j.version>1.7.18</org.slf4j.version>
+
 	</properties>
 
 	<modules>
@@ -45,9 +47,20 @@
 		<module>schedulers-parent</module>
 		<module>kafka-client-09-extension</module>
 		<module>java-mail-sender</module>
+		<module>webpage-staticize-parent</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${org.slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${org.slf4j.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>javax.inject</groupId>
 				<artifactId>javax.inject</artifactId>
