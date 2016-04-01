@@ -3,9 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>cn.aposoft.framework</groupId>
+	<parent>
+		<groupId>cn.aposoft.framework</groupId>
+		<artifactId>framework-parent</artifactId>
+		<version>1.0.0.5-SNAPSHOT</version>
+	</parent>
 	<artifactId>kafka-client-09-extension</artifactId>
-	<version>1.0</version>
 	<name>kafka-client-09-extension</name>
 
 	<url>http://www.aposoft.cn/nexus</url>
@@ -44,7 +47,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
