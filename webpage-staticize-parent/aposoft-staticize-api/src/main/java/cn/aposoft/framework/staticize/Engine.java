@@ -11,6 +11,12 @@ package cn.aposoft.framework.staticize;
  * @since 1.0.0.5
  */
 public interface Engine {
+	/**
+	 * 引擎类型：如velocity，free marker， httl等
+	 * 
+	 * @return 返回支持的模板类型
+	 */
+	String getType();
 
 	/**
 	 * 完成由模板和数据模型合并的过程
@@ -21,6 +27,6 @@ public interface Engine {
 	 *            数据对象
 	 * @return 生成的最终结果
 	 */
-	StaticPage execute(Template template, Model model);
+	StaticPage execute(Template template, Model model) throws StaticizeException;
 
 }

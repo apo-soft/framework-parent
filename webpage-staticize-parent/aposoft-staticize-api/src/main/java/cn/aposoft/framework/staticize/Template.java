@@ -12,11 +12,18 @@ package cn.aposoft.framework.staticize;
 public interface Template {
 
 	/**
-	 * 用于定义模板的唯一标识
+	 * 用于定义模板的唯一标识，同一个业务的模板id一样
 	 * 
 	 * @return 模板的唯一ID
 	 */
 	String getId();
+
+	/**
+	 * 模板的实现类型：如velocity，free marker等
+	 * 
+	 * @return Type类型，和EngineType应当保持一致
+	 */
+	String getType();
 
 	/**
 	 * 模板的内容

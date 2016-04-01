@@ -10,6 +10,13 @@ package cn.aposoft.framework.staticize;
  * @since 1.0.0.5
  */
 public interface TemplateProvider {
+
+	/**
+	 * 模板的类型，于Engine支持的模板类型一致
+	 * @return 模板类型
+	 */
+	String getType();
+
 	/**
 	 * 加载模板方法
 	 * 
