@@ -3,6 +3,8 @@
  */
 package cn.aposoft.framework.staticize;
 
+import java.io.IOException;
+
 /**
  * 实现对静态化结果的输出 Exporter的实现类,必须能够提供OutputStream作为byte流的输出目标,并提供关闭输出流的方法
  * 
@@ -15,9 +17,11 @@ public interface Exporter {
 	 * 
 	 * @param page
 	 *            静态化的待输出对象 {@link StaticPage}
+	 * @param url 输出静态文件的路径
 	 * @return OutputStream,用于将静态化结果进行输出
 	 * @throws StaticizeException
 	 *             当输出静态化文件时,抛出此异常
+	 * @throws IOException 
 	 */
-	void export(StaticPage page) throws StaticizeException;;
+	void export(StaticPage page,String url) throws StaticizeException, IOException;;
 }
