@@ -3,6 +3,8 @@
  */
 package cn.aposoft.framework.staticize;
 
+import java.util.Map;
+
 /**
  * 模板提供接口
  * 
@@ -27,5 +29,7 @@ public interface TemplateProvider {
 	 *             当加载template失败时时,抛出此异常
 	 */
 	Template getTemplate(String id) throws StaticizeException;
-
+	
+	Map<String, Template> getTemplates() throws StaticizeException;
+	
 }
