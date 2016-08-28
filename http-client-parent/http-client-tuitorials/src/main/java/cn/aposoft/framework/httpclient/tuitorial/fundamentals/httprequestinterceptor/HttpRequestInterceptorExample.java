@@ -38,19 +38,15 @@ public class HttpRequestInterceptorExample {
         AtomicInteger count = new AtomicInteger(1);
         HttpClientContext localContext = HttpClientContext.create();
         localContext.setAttribute("count", count);
-        HttpGet httpget = new HttpGet("https://www.aposoft.cn/");
-        for (int i = 0; i < 1; i++) {
-            CloseableHttpResponse response = null;
-            try {
-                response = httpclient.execute(httpget, localContext);
+        HttpGet httpget = new HttpGet("http://www.aposoft.cn/");
+        for (int i = 0; i < 10; i++) {
+            try (CloseableHttpResponse response = httpclient.execute(httpget, localContext);) {
                 HttpEntity entity = response.getEntity();
             } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
-                HttpClientUtils.closeQuietly(response);
             }
-
         }
+        
     }
 
 }
