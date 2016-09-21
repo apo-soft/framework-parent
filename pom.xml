@@ -48,6 +48,7 @@
 		<module>java-mail-sender</module>
 		<module>webpage-staticize-parent</module>
     <module>http-client-parent</module>
+    <module>jedis-parent</module>
   </modules>
 	<dependencyManagement>
 		<dependencies>

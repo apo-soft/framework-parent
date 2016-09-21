@@ -4,6 +4,7 @@
 package cn.aposoft.framework.httpclient.tuitorial.fundamentals.connectionkeepalivestrategy;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -53,6 +54,9 @@ public class ConnectionKeepAliveStrategyExample {
             CloseableHttpResponse response1 = httpclient.execute(httpget1, context);
             try {
                 HttpEntity entity1 = response1.getEntity();
+                try (InputStream input1 = entity1.getContent();) {
+
+                }
             } finally {
                 response1.close();
             }
@@ -60,6 +64,8 @@ public class ConnectionKeepAliveStrategyExample {
             CloseableHttpResponse response2 = httpclient.execute(httpget2, context);
             try {
                 HttpEntity entity2 = response2.getEntity();
+                try (InputStream input = entity2.getContent();) {
+                }
             } finally {
                 response2.close();
             }
