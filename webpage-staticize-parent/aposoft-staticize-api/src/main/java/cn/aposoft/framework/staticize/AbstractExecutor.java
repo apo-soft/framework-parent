@@ -44,9 +44,9 @@ public abstract class AbstractExecutor {
     public abstract void execute() throws StaticizeException;
 
     protected void executeInternal(String templateName, String modelName) throws StaticizeException, IOException {
-        Model model = modelProvider.getModel(modelName);
-        Template template = templateProvider.getTemplate(templateName);
-        StaticPage page = engine.execute(template, model);
+        // Model model = modelProvider.getModel(modelName);
+        // Template template = templateProvider.getTemplate(templateName);
+        // StaticPage page = engine.execute(template, model);
 
     }
 

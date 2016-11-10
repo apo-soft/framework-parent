@@ -3,9 +3,6 @@ package impl;
 
 import java.util.HashMap;
 
-import org.apache.velocity.app.Velocity;
-
-import cn.aposoft.framework.staticize.Calculate;
 import cn.aposoft.framework.staticize.Template;
 
 public class VelocityTemplateImpl implements Template{

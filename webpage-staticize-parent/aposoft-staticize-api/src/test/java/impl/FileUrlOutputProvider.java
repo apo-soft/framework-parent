@@ -16,12 +16,12 @@ import cn.aposoft.framework.staticize.OutputProvider;
 public class FileUrlOutputProvider implements OutputProvider {
 
     public FileUrlOutputProvider(Map<String, OutPutSources> outmap) {
-        // TODO Auto-generated constructor stub
+
     }
 
     @Override
     public Map<String, OutPutSources> getOutputSources() {
-        // TODO Auto-generated method stub
+
         return null;
     }
 

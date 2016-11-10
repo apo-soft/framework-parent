@@ -13,10 +13,10 @@ import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 
 /**
  * @author LiuJian
@@ -42,11 +42,12 @@ public class HttpRequestInterceptorExample {
         for (int i = 0; i < 10; i++) {
             try (CloseableHttpResponse response = httpclient.execute(httpget, localContext);) {
                 HttpEntity entity = response.getEntity();
+                EntityUtils.consume(entity);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        
+
     }
 
 }

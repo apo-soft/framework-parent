@@ -18,159 +18,158 @@ import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean.
  *
  */
 public class JobDetailFactory implements InitializingBean, Serializable {
-	private static final long serialVersionUID = 2495708050656947375L;
-	private transient org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean bean;
-	private JobDetail jobDetail;
+    private static final long serialVersionUID = 2495708050656947375L;
+    private JobDetail jobDetail;
 
-	private String targetMethod;
-	private Object targetObject;
-	private Class<?> targetClass;
-	
-	private String name;
+    private String targetMethod;
+    private Object targetObject;
+    private Class<?> targetClass;
 
-	private String group = Scheduler.DEFAULT_GROUP;
+    private String name;
 
-	private boolean concurrent = true;
+    private String group = Scheduler.DEFAULT_GROUP;
 
-	public JobDetail getObject() {
-		return this.jobDetail;
-	}
+    private boolean concurrent = true;
 
-	/**
-	 * Set the name of the job.
-	 * <p>
-	 * Default is the bean name of this FactoryBean.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    public JobDetail getObject() {
+        return this.jobDetail;
+    }
 
-	/**
-	 * Set the group of the job.
-	 * <p>
-	 * Default is the default group of the Scheduler.
-	 * 
-	 * @see org.quartz.Scheduler#DEFAULT_GROUP
-	 */
-	public void setGroup(String group) {
-		this.group = group;
-	}
+    /**
+     * Set the name of the job.
+     * <p>
+     * Default is the bean name of this FactoryBean.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * Specify whether or not multiple jobs should be run in a concurrent
-	 * fashion. The behavior when one does not want concurrent jobs to be
-	 * executed is realized through adding the
-	 * {@code @PersistJobDataAfterExecution} and
-	 * {@code @DisallowConcurrentExecution} markers. More information on
-	 * stateful versus stateless jobs can be found <a href=
-	 * "http://www.quartz-scheduler.org/documentation/quartz-2.1.x/tutorials/tutorial-lesson-03">
-	 * here</a>.
-	 * <p>
-	 * The default setting is to run jobs concurrently.
-	 */
-	public void setConcurrent(boolean concurrent) {
-		this.concurrent = concurrent;
-	}
+    /**
+     * Set the group of the job.
+     * <p>
+     * Default is the default group of the Scheduler.
+     * 
+     * @see org.quartz.Scheduler#DEFAULT_GROUP
+     */
+    public void setGroup(String group) {
+        this.group = group;
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public void afterPropertiesSet() throws ClassNotFoundException, NoSuchMethodException {
-		prepare();
+    /**
+     * Specify whether or not multiple jobs should be run in a concurrent
+     * fashion. The behavior when one does not want concurrent jobs to be
+     * executed is realized through adding the
+     * {@code @PersistJobDataAfterExecution} and
+     * {@code @DisallowConcurrentExecution} markers. More information on
+     * stateful versus stateless jobs can be found <a href=
+     * "http://www.quartz-scheduler.org/documentation/quartz-2.1.x/tutorials/tutorial-lesson-03">
+     * here</a>.
+     * <p>
+     * The default setting is to run jobs concurrently.
+     */
+    public void setConcurrent(boolean concurrent) {
+        this.concurrent = concurrent;
+    }
 
-		// Consider the concurrent flag to choose between stateful and stateless
-		// job.
-		Class<?> jobClass = (this.concurrent ? MethodInvokingJob.class : StatefulMethodInvokingJob.class);
+    @Override
+    @SuppressWarnings("unchecked")
+    public void afterPropertiesSet() throws ClassNotFoundException, NoSuchMethodException {
+        prepare();
 
-		// Build JobDetail instance.
-		JobDetailImpl jdi = new JobDetailImpl();
-		jdi.setName(name);
-		jdi.setGroup(this.group);
-		jdi.setJobClass((Class<Job>) jobClass);
-		jdi.setDurability(true);
-		// jdi.getJobDataMap().put("methodInvoker", this);
-		this.jobDetail = jdi;
+        // Consider the concurrent flag to choose between stateful and stateless
+        // job.
+        Class<?> jobClass = (this.concurrent ? MethodInvokingJob.class : StatefulMethodInvokingJob.class);
 
-		postProcessJobDetail(this.jobDetail);
-	}
+        // Build JobDetail instance.
+        JobDetailImpl jdi = new JobDetailImpl();
+        jdi.setName(name);
+        jdi.setGroup(this.group);
+        jdi.setJobClass((Class<Job>) jobClass);
+        jdi.setDurability(true);
+        // jdi.getJobDataMap().put("methodInvoker", this);
+        this.jobDetail = jdi;
 
-	/**
-	 * Prepare the specified method. The method can be invoked any number of
-	 * times afterwards.
-	 * 
-	 * @see #getPreparedMethod
-	 * @see #invoke
-	 */
-	public void prepare() throws ClassNotFoundException, NoSuchMethodException {
-	}
+        postProcessJobDetail(this.jobDetail);
+    }
 
-	/**
-	 * Callback for post-processing the JobDetail to be exposed by this
-	 * FactoryBean.
-	 * <p>
-	 * The default implementation is empty. Can be overridden in subclasses.
-	 * 
-	 * @param jobDetail
-	 *            the JobDetail prepared by this FactoryBean
-	 */
-	protected void postProcessJobDetail(JobDetail jobDetail) {
-	}
+    /**
+     * Prepare the specified method. The method can be invoked any number of
+     * times afterwards.
+     * 
+     * @see #getPreparedMethod
+     * @see #invoke
+     */
+    public void prepare() throws ClassNotFoundException, NoSuchMethodException {
+    }
 
-	/**
-	 * Set the target object on which to call the target method. Only necessary
-	 * when the target method is not static; else, a target class is sufficient.
-	 * 
-	 * @see #setTargetClass
-	 * @see #setTargetMethod
-	 */
-	public void setTargetObject(Object targetObject) {
-		this.targetObject = targetObject;
-		if (targetObject != null) {
-			this.targetClass = targetObject.getClass();
-		}
-	}
+    /**
+     * Callback for post-processing the JobDetail to be exposed by this
+     * FactoryBean.
+     * <p>
+     * The default implementation is empty. Can be overridden in subclasses.
+     * 
+     * @param jobDetail
+     *            the JobDetail prepared by this FactoryBean
+     */
+    protected void postProcessJobDetail(JobDetail jobDetail) {
+    }
 
-	/**
-	 * Return the target object on which to call the target method.
-	 */
-	public Object getTargetObject() {
-		return this.targetObject;
-	}
+    /**
+     * Set the target object on which to call the target method. Only necessary
+     * when the target method is not static; else, a target class is sufficient.
+     * 
+     * @see #setTargetClass
+     * @see #setTargetMethod
+     */
+    public void setTargetObject(Object targetObject) {
+        this.targetObject = targetObject;
+        if (targetObject != null) {
+            this.targetClass = targetObject.getClass();
+        }
+    }
 
-	/**
-	 * Set the name of the method to be invoked. Refers to either a static
-	 * method or a non-static method, depending on a target object being set.
-	 * 
-	 * @see #setTargetClass
-	 * @see #setTargetObject
-	 */
-	public void setTargetMethod(String targetMethod) {
-		this.targetMethod = targetMethod;
-	}
+    /**
+     * Return the target object on which to call the target method.
+     */
+    public Object getTargetObject() {
+        return this.targetObject;
+    }
 
-	/**
-	 * Return the name of the method to be invoked.
-	 */
-	public String getTargetMethod() {
-		return this.targetMethod;
-	}
+    /**
+     * Set the name of the method to be invoked. Refers to either a static
+     * method or a non-static method, depending on a target object being set.
+     * 
+     * @see #setTargetClass
+     * @see #setTargetObject
+     */
+    public void setTargetMethod(String targetMethod) {
+        this.targetMethod = targetMethod;
+    }
 
-	/**
-	 * Set the target class on which to call the target method. Only necessary
-	 * when the target method is static; else, a target object needs to be
-	 * specified anyway.
-	 * 
-	 * @see #setTargetObject
-	 * @see #setTargetMethod
-	 */
-	public void setTargetClass(Class<?> targetClass) {
-		this.targetClass = targetClass;
-	}
+    /**
+     * Return the name of the method to be invoked.
+     */
+    public String getTargetMethod() {
+        return this.targetMethod;
+    }
 
-	/**
-	 * Return the target class on which to call the target method.
-	 */
-	public Class<?> getTargetClass() {
-		return this.targetClass;
-	}
+    /**
+     * Set the target class on which to call the target method. Only necessary
+     * when the target method is static; else, a target object needs to be
+     * specified anyway.
+     * 
+     * @see #setTargetObject
+     * @see #setTargetMethod
+     */
+    public void setTargetClass(Class<?> targetClass) {
+        this.targetClass = targetClass;
+    }
+
+    /**
+     * Return the target class on which to call the target method.
+     */
+    public Class<?> getTargetClass() {
+        return this.targetClass;
+    }
 
 }

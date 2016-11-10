@@ -2,35 +2,37 @@ package impl;
 
 import cn.aposoft.framework.staticize.Template;
 
-/**des: 未使用
+/**
+ * des: 未使用
+ * 
  * @author gao
  *
  * @param <T>
  */
-public class TemplateWarper <T> implements Template{
-	private T template;
-	public TemplateWarper(T template){
-		this.template = template;
-	}
-	
-	public T getTemplate(){
-		return template;
-	}
-	@Override
-	public String getId() {
-		return null;
-	}
+public class TemplateWarper<T> implements Template {
+    private T template;
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public TemplateWarper(T template) {
+        this.template = template;
+    }
 
-	@Override
-	public Object getContent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+    public T getTemplate() {
+        return template;
+    }
+
+    @Override
+    public String getId() {
+        return null;
+    }
+
+    @Override
+    public String getType() {
+        return null;
+    }
+
+    @Override
+    public Object getContent() {
+        return null;
+    }
+
 }
