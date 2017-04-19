@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>cn.aposoft.framework</groupId>
 		<artifactId>framework-parent</artifactId>
-		<version>1.0.0.6-SNAPSHOT</version>
+		<version>1.0.0.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>jedis-parent</artifactId>
 	<packaging>pom</packaging>

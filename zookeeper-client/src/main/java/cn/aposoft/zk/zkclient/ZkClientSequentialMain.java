@@ -41,7 +41,6 @@ public class ZkClientSequentialMain {
                 System.out.println("current:" + i);
                 e.printStackTrace();
             }
-
         }
 
         try {
@@ -87,7 +86,7 @@ public class ZkClientSequentialMain {
             long begin = System.currentTimeMillis();
             System.out.println(begin);
             for (int i = 0; i < 1000; i++) {
-                String nps1 = zc.create("/nps1", "0", CreateMode.PERSISTENT_SEQUENTIAL);
+                String nps1 = zc.create("/seq/nps1", "0", CreateMode.PERSISTENT_SEQUENTIAL);
                 Object obj = keys.putIfAbsent(nps1, o);
                 if (obj != null) {
                     System.out.println("conflictKey:" + nps1);

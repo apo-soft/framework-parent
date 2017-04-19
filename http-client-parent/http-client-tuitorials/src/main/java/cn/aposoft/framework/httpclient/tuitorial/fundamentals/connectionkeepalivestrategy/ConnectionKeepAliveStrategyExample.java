@@ -19,6 +19,8 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
 /**
+ * 
+ * 
  * @author LiuJian
  * @date 2016年8月27日
  * 

@@ -5,9 +5,9 @@
 	<parent>
 		<groupId>cn.aposoft.framework</groupId>
 		<artifactId>framework-parent</artifactId>
-		<version>1.0.0.6-SNAPSHOT</version>
+		<version>1.0.0.5-SNAPSHOT</version>
 	</parent>
-	<artifactId>networking-parent</artifactId>
+	<artifactId>schedulers-parent</artifactId>
 	<packaging>pom</packaging>
 	<distributionManagement>
 		<site>
@@ -15,10 +15,20 @@
 			<url>scp://webhost.company.com/www/website</url>
 		</site>
 	</distributionManagement>
+	<repositories>
+		<repository>
+			<id>aposoft</id>
+			<url>http://www.aposoft.cn/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<modules>
-		<module>http-client-demo</module>
+		<module>quartz-scheduler-demo</module>
+		<module>spring-quartz-demo</module>
+		<module>quartz-jobstore-mongodb-demo</module>
+		<module>spring-quartz-mongodb-demo</module>
+		<module>quartz-jobstore-mysql-demo</module>
 	</modules>
 </project>

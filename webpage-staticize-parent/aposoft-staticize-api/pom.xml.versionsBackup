@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>cn.aposoft.framework</groupId>
 		<artifactId>webpage-staticize-parent</artifactId>
-		<version>1.0.0.6-SNAPSHOT</version>
+		<version>1.0.0.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>aposoft-staticize-api</artifactId>
 	<name>aposoft-staticize-api</name>

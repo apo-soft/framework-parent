@@ -16,6 +16,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
 /**
+ * 警告: 以下连接数设置会被设置
+ * {@link #setConnectionManager( org.apache.http.conn.HttpClientConnectionManager)} 覆盖
+ * 最大连接数设置: 1. MaxConnPerRoute : 每个host的最大连接数 2. MaxConnTotal : Client的总的最大连接数
+ * 
  * @author LiuJian
  * @date 2016年8月28日
  * 

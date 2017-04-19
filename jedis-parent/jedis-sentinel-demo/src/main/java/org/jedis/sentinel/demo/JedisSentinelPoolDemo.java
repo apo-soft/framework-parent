@@ -28,7 +28,7 @@ public class JedisSentinelPoolDemo {
         try (JedisSentinelPool pool = new JedisSentinelPool(masterHost, sentinels, "GomeFinance");) {
 
             Jedis jedis = pool.getResource();
-
+          
             jedis.set("java-client-test-key", "test-v");
 
             System.out.println(jedis.get("java-client-test-key"));

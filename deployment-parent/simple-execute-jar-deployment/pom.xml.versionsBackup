@@ -5,13 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.aposoft.framework</groupId>
-		<artifactId>framework-parent</artifactId>
-		<version>1.0.0.6-SNAPSHOT</version>
+		<artifactId>deployment-parent</artifactId>
+		<version>1.0.0.5-SNAPSHOT</version>
 	</parent>
-	<artifactId>common-lang</artifactId>
-	<name>common-lang</name>
+	<artifactId>simple-execute-jar-deployment</artifactId>
+	<name>simple-execute-jar-deployment</name>
 	<url>http://maven.apache.org</url>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
