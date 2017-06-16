@@ -22,7 +22,7 @@ public class RedisLuaMain {
         String masterHost = "redis-master";
         JedisPoolConfig config = new JedisPoolConfig();
 
-        JedisPool pool = new JedisPool(config, masterHost, 6379, 1000, "GomeFinance");
+        JedisPool pool = new JedisPool(config, masterHost, 6379, 1000, "mymaster");
         String keyName = "name";
         Jedis jedis = pool.getResource();
         // jedis.auth("GomeFinance");
