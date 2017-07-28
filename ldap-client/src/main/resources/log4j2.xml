@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Don't forget to set system property -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector 
+	to make all loggers asynchronous. -->
+
+<!--Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出。 -->
+<!-- monitorInterval 自动监控配置文件是否发生改变的时间间隔，如果检测到改变会进行热加载 -->
+<!-- status="DEBUG" monitorInterval="1800" -->
+<Configuration>
+	<!-- 全局属性 -->
+	<properties>
+		<!--日志文件储存的目录 -->
+		<!-- <property name="LOG_HOME">${sys:catalina.home}/logs/om_error</property> -->
+		<property name="LOG_HOME">/data/logs/alarm</property>
+		<!--设定日志输出的具体格式 -->
+		<!--%-5p(日志级别) | %d(日期) | bt-v1.0 | [%t(线程名称)-%T(线程号)] (%c{1.}(简化全类名):%L(行号)) 
+			| %m(日志信息)%n(换行) -->
+		<!-- <property name="PATTERN">%-5p | %d | om-v1.0 | [%t-%T] (%c{1.}:%L) 
+			| %m%n</property> -->
+		<property name="PATTERN">%-5p %d [%t-%T] (%c{1.}:%L) %m%n
+		</property>
+
+		<property name="PATTERN_ALARM">%m%n</property>
+	</properties>
+
+	<!--定义日志的输出路径 -->
+	<Appenders>
+		<!--输出日志到控制台 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${PATTERN}" />
+		</Console>
+	</Appenders>
+
+	<!--然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
+	<Loggers>
+		<logger name="org.apache" level="DEBUG"></logger>
+		<!--com.gomefinance包下的日志异步输出 includeLocation:包含本地信息；additivity：不继承父类的日志输出 -->
+		<!--建立一个默认的root的logger -->
+		<root level="DEBUG">
+			<appender-ref ref="Console" />
+		</root>
+	</Loggers>
+</Configuration>  

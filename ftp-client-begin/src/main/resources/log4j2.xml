@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出。 -->
+<!-- monitorInterval 自动监控配置文件是否发生改变的时间间隔，如果检测到改变会进行热加载 -->
+
+<!-- Don't forget to set system property -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector 
+	to make all loggers asynchronous. -->
+
+<Configuration status="INFO" monitorInterval="1800">
+	<!-- 全局属性 -->
+	<properties>
+		<!--日志文件储存的目录 -->
+		<property name="LOG_HOME">/data/logs/alarm</property>
+		<!--设定日志输出的具体格式 -->
+		<!--%-5p(日志级别) | %d(日期) | bt-v1.0 | [%t(线程名称)-%T(线程号)] (%c{1.}(简化全类名):%L(行号)) 
+			| %m(日志信息)%n(换行) -->
+		<!-- <property name="PATTERN">%-5p | %d | om-v1.0 | [%t-%T] (%c{1.}:%L) 
+			| %m%n</property> -->
+		<property name="PATTERN">%-5p %d | [%t-%T] (%c{1.}:%L) %m%n</property>
+		<property name="PATTERN_ALARM">%m%n</property>
+	</properties>
+
+	<!--定义日志的输出路径 -->
+	<Appenders>
+		<!--输出日志到控制台 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${PATTERN}" />
+		</Console>
+
+		<!-- 这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+		<RollingFile name="AlarmMessage" fileName="${LOG_HOME}/alarm.log"
+			filePattern="${LOG_HOME}/alarm_%d{yyyy-MM-dd}_%i.log" bufferedIO="false"
+			bufferSize="0" immediateFlush="true">
+			<!--设置日志输出的格式 -->
+			<PatternLayout pattern="${PATTERN_ALARM}" />
+			<Policies>
+				<!--设置触发时间策略的时间间隔，一天产生一个新文件 interval 标识 时间切换格式的最小粒度为切换单位 -->
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<!--设置每个日志文件的最大大小，单位可以为 B KB MB GB -->
+				<!-- <SizeBasedTriggeringPolicy size="1KB"/> -->
+			</Policies>
+			<!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20000 -->
+			<DefaultRolloverStrategy max="20000" />
+		</RollingFile>
+	</Appenders>
+
+	<!-- 然后定义logger,只有定义了logger并引入的appender,appender才会生效 -->
+	<Loggers>
+		<!-- 报警内容输出 /* additivity="false" -->
+		<logger name="alarm" level="INFO">
+			<appender-ref ref="AlarmMessage" />
+		</logger>
+
+		<!--建立一个默认的root的logger -->
+		<root level="DEBUG" includeLocation="true">
+			<appender-ref ref="Console" />
+		</root>
+	</Loggers>
+</Configuration>  
